@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="OctaBiz vs Catapult: a 16-area comparison for US grocery and specialty retail, with the gaps OctaBiz should close next.">
+<style>body{margin:0}</style>
+<title>OctaBiz vs Catapult</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap">
+<style>
+/* Layout: one reading column (max 1120px) under a compact sticky section bar.
+   Identity motif: the side that leads an area gets its colour (OctaBiz blue, Catapult amber),
+   used the same way in the tally bar, the scorecard cells and the verdict chips.
+   Fonts are OctaBiz's own product faces: Sora for display, Inter for text. */
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --sunk: #eef1f8;
+  --ink: #1f2638;
+  --ink-2: #4a5368;
+  --line: #dfe4ee;
+  --brand: #3d5ee1;
+  --brand-text: #2f4fcf;
+  --brand-ink: #ffffff;
+  --brand-soft: #e8edfd;
+  --cat: #a4520a;
+  --cat-soft: #fdf1e3;
+  --even: #556070;
+  --even-soft: #edf0f4;
+  --font-display: "Sora", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r-sm: 6px;
+  --r-md: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1424; --surface: #151c30; --sunk: #1b2339; --ink: #eef1f7; --ink-2: #aab3c5;
+    --line: #2a3350; --brand: #7b93f2; --brand-text: #a9b9f7; --brand-ink: #0e1424; --brand-soft: #1f2b52;
+    --cat: #f0a65c; --cat-soft: #3a2614; --even: #b7bfcd; --even-soft: #252d40;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1424; --surface: #151c30; --sunk: #1b2339; --ink: #eef1f7; --ink-2: #aab3c5;
+  --line: #2a3350; --brand: #7b93f2; --brand-text: #a9b9f7; --brand-ink: #0e1424; --brand-soft: #1f2b52;
+  --cat: #f0a65c; --cat-soft: #3a2614; --even: #b7bfcd; --even-soft: #252d40;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--surface);
+}
+a { color: var(--brand-text); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px;
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+p { margin: 0; }
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.measure { max-width: 68ch; }
+.muted { color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Header */
+.top { background: var(--surface); border-bottom: 1px solid var(--line); }
+.top .wrap { padding-block: 40px 32px; display: flex; flex-direction: column; gap: 18px; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; color: var(--ink-2); font-size: 0.92rem; }
+.lang { margin-inline-start: auto; }
+.lang a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 14px; border: 1px solid var(--line); border-radius: var(--r-sm); text-decoration: none; font-weight: 600; }
+.lede { font-size: 1.15rem; color: var(--ink-2); max-width: 70ch; }
+.vs { color: var(--brand); }
+
+/* Section bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+}
+.bar nav { overflow-x: auto; scrollbar-width: thin; }
+.bar ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; white-space: nowrap; }
+.bar a {
+  display: inline-flex; align-items: center; min-height: 44px; padding-inline: 10px;
+  color: var(--ink-2); text-decoration: none; font-size: 0.9rem; font-weight: 500; border-radius: var(--r-sm);
+}
+.bar a:hover { color: var(--ink); background: var(--sunk); }
+
+section { scroll-margin-top: 64px; }
+.sec { padding-block: 56px 8px; display: flex; flex-direction: column; gap: 22px; }
+.sec-head { display: flex; flex-direction: column; gap: 8px; }
+
+/* Verdict */
+.verdict { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.verdict-text { display: flex; flex-direction: column; gap: 14px; font-size: 1.06rem; }
+.verdict-text strong { font-weight: 600; }
+.tally { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.tally-title { font-weight: 600; }
+.tally-bar { display: flex; gap: 3px; height: 34px; }
+.tally-bar span { display: block; border-radius: 4px; }
+.seg-o { background: var(--brand); }
+.seg-e { background: var(--even); opacity: 0.55; }
+.seg-c { background: var(--cat); }
+.tally-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tally-legend li { display: flex; align-items: center; gap: 10px; }
+.tally-legend b { font-family: var(--font-display); font-size: 1.35rem; min-width: 1.4em; }
+.sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+
+/* Facts */
+.facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 32px; margin: 0; }
+.facts div { padding-block: 14px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.facts dt { font-weight: 600; font-size: 0.95rem; }
+.facts dd { margin: 0; color: var(--ink-2); }
+.note { background: var(--sunk); border-radius: var(--r-md); padding: 16px 18px; color: var(--ink-2); }
+.note strong { color: var(--ink); }
+
+/* Architecture */
+.arch { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+.arch figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.arch figcaption { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+.tier { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; background: var(--surface); }
+.tier small { display: block; color: var(--ink-2); font-size: 0.86rem; }
+.tier.cloud { background: var(--sunk); }
+.down { text-align: center; color: var(--ink-2); font-size: 0.85rem; line-height: 1; }
+.store { border: 1.5px dashed var(--ink-2); border-radius: var(--r-md); padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.store-label { font-size: 0.85rem; color: var(--ink-2); font-weight: 600; }
+.tier.server { border-color: var(--cat); background: var(--cat-soft); }
+.tier.light { border-color: var(--brand); background: var(--brand-soft); }
+
+/* Scorecard */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filters button {
+  min-height: 44px; padding-inline: 16px; border-radius: var(--r-sm); border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font: inherit; font-weight: 500; cursor: pointer;
+}
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.filters .count { color: var(--ink-2); font-size: 0.92rem; margin-inline-start: 6px; }
+.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: start; vertical-align: top; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+thead th { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; background: var(--sunk); }
+tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+.score th[scope="row"] { font-weight: 600; width: 16%; }
+.score td.c, .score td.o { width: 36%; color: var(--ink-2); }
+.score td.v { width: 12%; }
+.score tr[data-v="o"] td.o { background: var(--brand-soft); color: var(--ink); }
+.score tr[data-v="c"] td.c { background: var(--cat-soft); color: var(--ink); }
+.chip { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; line-height: 1.35; }
+.chip.o { background: var(--brand-soft); color: var(--brand-text); }
+.chip.c { background: var(--cat-soft); color: var(--cat); }
+.chip.e { background: var(--even-soft); color: var(--even); }
+.empty { padding: 20px; color: var(--ink-2); }
+.items th[scope="row"] { width: 26%; font-weight: 600; }
+.items td:nth-child(2) { width: 12%; white-space: nowrap; }
+.items td:nth-child(3) { color: var(--ink-2); }
+.build td:first-child { width: 3rem; color: var(--ink-2); }
+.build td:nth-child(3) { width: 14%; color: var(--ink-2); }
+.build td:nth-child(4) { width: 10%; }
+
+/* Gaps */
+.tier-head { display: flex; flex-direction: column; gap: 4px; padding-top: 8px; }
+.must { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; counter-reset: must; }
+.must li { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: 4px 12px; padding-block: 18px; border-top: 1px solid var(--line); counter-increment: must; }
+.must li::before { content: counter(must); font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--cat); line-height: 1.1; grid-row: span 3; }
+.must h3 { font-size: 1.08rem; }
+.must p { color: var(--ink-2); }
+.move { color: var(--ink) !important; }
+.move b { font-weight: 600; }
+.smaller { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-2); }
+
+/* Advantages */
+.lead-adv { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.lead-adv .copy { display: flex; flex-direction: column; gap: 12px; }
+.lead-adv ul { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-2); }
+.transcript { background: var(--sunk); border-radius: var(--r-md); padding: 18px; display: flex; flex-direction: column; gap: 12px; font-size: 0.94rem; }
+.transcript .who { font-size: 0.8rem; font-weight: 600; color: var(--ink-2); }
+.bubble { border-radius: var(--r-md); padding: 12px 14px; }
+.bubble.q { background: var(--brand); color: var(--brand-ink); align-self: flex-end; max-width: 92%; }
+.bubble.a { background: var(--surface); border: 1px solid var(--line); }
+.bubble.a ul { margin: 6px 0 0; padding-inline-start: 18px; color: var(--ink-2); }
+.steps { font-size: 0.82rem; color: var(--ink-2); }
+.adv-list { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 36px; }
+.adv-list article { padding-block: 18px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.adv-list p { color: var(--ink-2); }
+.shot { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.shot img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: var(--r-md); }
+.shot figcaption { font-size: 0.86rem; color: var(--ink-2); }
+
+/* Price */
+.price { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.cost-list { margin: 0; display: flex; flex-direction: column; }
+.cost-list div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding-block: 12px; border-top: 1px solid var(--line); }
+.cost-list dt { color: var(--ink-2); }
+.cost-list dd { margin: 0; font-weight: 600; text-align: end; }
+
+/* Weak spots */
+.weak { margin: 0; padding: 0; list-style: none; counter-reset: weak; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 36px; }
+.weak li { counter-increment: weak; padding-block: 16px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.weak h3::before { content: counter(weak) ". "; color: var(--cat); }
+.weak q { color: var(--ink-2); font-style: italic; }
+.src { font-size: 0.84rem; color: var(--ink-2); }
+
+/* Next */
+.plays { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.play { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.play p { color: var(--ink-2); }
+.play.primary { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand) inset; }
+.order { margin: 0; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 10px; }
+.order li::marker { font-family: var(--font-display); font-weight: 700; color: var(--brand-text); }
+.order span { color: var(--ink-2); }
+
+/* Method */
+.method { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.method ul { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-2); font-size: 0.93rem; }
+.sources { columns: 2; column-gap: 32px; font-size: 0.88rem; margin: 0; padding-inline-start: 18px; }
+.sources li { break-inside: avoid; margin-bottom: 6px; overflow-wrap: anywhere; }
+footer { padding-block: 48px; color: var(--ink-2); font-size: 0.9rem; }
+
+@media (max-width: 860px) {
+  .verdict, .arch, .lead-adv, .price, .method { grid-template-columns: minmax(0, 1fr); }
+  .plays { grid-template-columns: minmax(0, 1fr); }
+  .facts, .adv-list, .weak { grid-template-columns: minmax(0, 1fr); }
+  .sources { columns: 1; }
+}
+@media (max-width: 760px) {
+  .top .wrap { padding-block: 28px 24px; }
+  .sec { padding-block: 44px 4px; }
+  .table-box.cards { overflow: visible; border: 0; background: transparent; }
+  .score, .score tbody, .score tr, .score th, .score td { display: block; width: auto !important; }
+  .score thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .score tr { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); margin-bottom: 12px; overflow: hidden; }
+  .score tr[hidden] { display: none; }
+  .score th[scope="row"] { border-bottom: 0; padding-bottom: 4px; font-size: 1.02rem; }
+  .score td { border-bottom: 0; padding-top: 8px; }
+  .score td.v { padding-top: 0; }
+  .score td.c::before, .score td.o::before { content: attr(data-label); display: block; font-weight: 600; font-size: 0.8rem; color: var(--ink); margin-bottom: 2px; }
+  .ai th, .ai td { padding: 12px; }
+  .items, .items tbody, .items tr, .items th, .items td { display: block; width: auto !important; }
+  .items thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .items tr { border-bottom: 1px solid var(--line); padding-block: 10px; }
+  .items tbody tr:last-child { border-bottom: 0; }
+  .items th, .items td { border-bottom: 0; padding-block: 3px; }
+  .build th, .build td { padding: 10px 8px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="meta-row">
+      <span>Competitive analysis</span>
+      <span class="num">19 November 2026</span>
+      <span>Grocery and specialty retail, United States</span>
+    </div>
+    <h1>OctaBiz <span class="vs">vs</span> Catapult</h1>
+    <p class="lede">Catapult is the grocery POS made by ECRS and sold in Florida by JCR Systems. It runs in more than 4,000 stores and is built around the checkout lane. OctaBiz is built to run the whole business, with AI agents that do the work. This report compares the two in 16 areas and says what OctaBiz should build next.</p>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#verdict">Verdict</a></li>
+        <li><a href="#catapult">Who they are</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#scorecard">Scorecard</a></li>
+        <li><a href="#gaps">Our gaps</a></li>
+        <li><a href="#build">Build list</a></li>
+        <li><a href="#advantages">Advantages</a></li>
+        <li><a href="#ai">AI</a></li>
+        <li><a href="#price">Price</a></li>
+        <li><a href="#weak">Weak spots</a></li>
+        <li><a href="#next">Next steps</a></li>
+        <li><a href="#method">Sources</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<main>
+<section id="verdict" class="wrap sec">
+  <h2>The verdict</h2>
+  <div class="verdict">
+    <div class="verdict-text measure">
+      <p><strong>Catapult wins at the checkout lane and in grocery-specific selling.</strong> It reads US benefit cards (EBT chip cards, WIC, FSA/HSA and health-benefit cards), keeps its built-in card readers working when the internet drops, scans IDs for alcohol, runs its own scales and self-checkout lanes, takes SNAP in its web store, and has 37 years of grocery customers behind it.</p>
+      <p><strong>OctaBiz wins in the back office.</strong> It has full accounting where Catapult has a ledger export, AI that carries out work across the business with approval and an audit log, an open API free to every customer, and a published monthly price. Stock, multi-store, loyalty, reports and how it runs come out even: OctaBiz has no servers and covers more ground; Catapult has more grocery depth.</p>
+      <p><strong>To take Catapult stores, OctaBiz has to close five lane gaps first:</strong> EBT on the card reader, built-in card payments without internet, ID age checks, a live scale at the lane, and WIC for the stores that need it. Fuller-service grocers will then ask for nickel rounding, house charge, scanned coupons and online SNAP.</p>
+    </div>
+    <div class="tally" role="group" aria-labelledby="tally-title">
+      <p class="tally-title" id="tally-title">Who leads across the 16 areas</p>
+      <div class="tally-bar" aria-hidden="true">
+        <span class="seg-o" style="flex: 4"></span>
+        <span class="seg-e" style="flex: 5"></span>
+        <span class="seg-c" style="flex: 7"></span>
+      </div>
+      <ul class="tally-legend">
+        <li><span class="sw seg-o"></span><b class="num">4</b> OctaBiz ahead: accounting, AI, API, price</li>
+        <li><span class="sw seg-e"></span><b class="num">5</b> Even: stock and buying, multi-store, loyalty, reports, how it runs</li>
+        <li><span class="sw seg-c"></span><b class="num">7</b> Catapult ahead: checkout, payments, promotions, scales, online selling, hardware, track record</li>
+      </ul>
+      <p class="muted" style="font-size:0.88rem">Rechecked row by row on 19 November 2026. The first version had OctaBiz ahead in 6 and Catapult in 6.</p>
+    </div>
+  </div>
+</section>
+
+<section id="catapult" class="wrap sec">
+  <div class="sec-head">
+    <h2>Who Catapult is</h2>
+    <p class="muted measure">JCR Systems resells it; ECRS builds it. ECRS is in Boone, North Carolina.</p>
+  </div>
+  <dl class="facts">
+    <div><dt>Maker</dt><dd>ECRS (ECR Software Corporation). Founded 1989 by Pete Catoe, who is still CEO. Family-owned and self-funded, with no outside investors.</dd></div>
+    <div><dt>Size</dt><dd>"4,000+" store locations in the US, Canada and the Caribbean (ECRS, January 2026). About 220 to 240 staff by third-party estimates.</dd></div>
+    <div><dt>Who buys it</dt><dd>Independent and regional grocers, natural food stores, co-ops, convenience and fuel, liquor, pharmacy. Named customers include Cub (107 stores, about 1,500 lanes), Food City, Erewhon, Eataly and Redner's.</dd></div>
+    <div><dt>JCR Systems</dt><dd>A Florida dealer (Jacksonville and Orlando), founded 1950. It adds installation, managed IT, on-site support and leasing. Its Catapult page is out of date: old product names and an older "4 years in a row" ranking claim.</dd></div>
+    <div><dt>Standing</dt><dd>Number one grocery vendor on the RIS Software LeaderBoard 11 years running (vendor-reported). Claims 98% customer retention. SOC 2 Type 2 (February 2026) and PA-DSS.</dd></div>
+    <div><dt>Price</dt><dd>Not published. One directory lists "from US$25,000, per feature" (could not be verified). Training is $250 per person.</dd></div>
+  </dl>
+  <p class="note measure"><strong>Recent moves to watch:</strong> a new Chief Revenue Officer from the independent-grocery world (March 2026), a migration tool for stores switching to Catapult (November 2025), camera produce recognition at the scale (11 November 2026), and an API policy that builds new endpoints only when a retailer pays for them (March 2026). ECRS is pushing harder for new stores, the same stores OctaBiz would target.</p>
+</section>
+
+<section id="architecture" class="wrap sec">
+  <div class="sec-head">
+    <h2>How each one runs</h2>
+    <p class="muted measure">The biggest difference is what sits in the back room of the store.</p>
+  </div>
+  <div class="arch">
+    <figure>
+      <figcaption>A Catapult store</figcaption>
+      <div class="tier cloud">ECRS cloud, sold as add-ons<small>WebCart online store. Cognition analytics and AI, used by about 600 of 4,000+ stores (May 2025).</small></div>
+      <div class="down" aria-hidden="true">&#8595;</div>
+      <div class="tier">HQ server ("Enterprise Controller", Linux)<small>Pushes prices, promotions and settings to every store.</small></div>
+      <div class="down" aria-hidden="true">&#8595;</div>
+      <div class="store">
+        <span class="store-label">In the store, bought and maintained by the retailer</span>
+        <div class="tier server">Store server ("Store Controller") in the back room<small>Holds store data, reports, backups and EDI. Back office is reached over a VPN.</small></div>
+        <div class="tier server">Checkout lanes<small>Java software on Windows terminals, pin pads, scales, self-checkout.</small></div>
+      </div>
+    </figure>
+    <figure>
+      <figcaption>An OctaBiz store</figcaption>
+      <div class="tier cloud">OctaBiz cloud, one database<small>POS, stock, buying, books, CRM, online store and AI agents. Updates go live as they are merged.</small></div>
+      <div class="down" aria-hidden="true">&#8595;</div>
+      <div class="store">
+        <span class="store-label">In the store, nothing to maintain but devices</span>
+        <div class="tier light">Till in a browser, the Windows or Mac desktop app, or a phone<small>Opens and sells offline and syncs later. Built-in card readers, gift cards, points and refunds need a connection; a standalone card terminal still works.</small></div>
+        <div class="tier light">Device Bridge app on the till PC<small>Receipt printers, cash drawers, label scales. Stripe card readers.</small></div>
+      </div>
+    </figure>
+  </div>
+  <p class="measure">Catapult's design is strong offline and fast at the lane, but every store carries servers to buy, patch and replace. JCR's own service menu shows that cost: anti-virus, backup, network security and a "VPN concentrator". OctaBiz has nothing in the back room. Its weak point is built-in card payments, gift cards and refunds when the internet drops.</p>
+</section>
+
+<section id="scorecard" class="wrap sec">
+  <div class="sec-head">
+    <h2>Scorecard, area by area</h2>
+    <p class="muted measure">The tinted cell marks the side that leads. "Catapult" lists what ECRS documents; "OctaBiz" lists what is live in production today.</p>
+  </div>
+  <div class="filters" role="group" aria-label="Filter areas">
+    <button type="button" data-f="all" aria-pressed="true">All 16</button>
+    <button type="button" data-f="o" aria-pressed="false">OctaBiz ahead</button>
+    <button type="button" data-f="e" aria-pressed="false">Even</button>
+    <button type="button" data-f="c" aria-pressed="false">Catapult ahead</button>
+    <span class="count" id="count" aria-live="polite">Showing 16 of 16 areas</span>
+  </div>
+  <div class="table-box cards">
+    <table class="score">
+      <thead><tr><th scope="col">Area</th><th scope="col">Catapult</th><th scope="col">OctaBiz</th><th scope="col">Lead</th></tr></thead>
+      <tbody>
+        <tr data-v="c"><th scope="row">Checkout lane</th>
+          <td class="c" data-label="Catapult">One engine for lanes, self-checkout, scales, fuel and web. Unlimited tenders, ID scan for age, customer display with ads, tablet line-busting, scan-and-go on the shopper's phone, layaway, house charge.</td>
+          <td class="o" data-label="OctaBiz">Has: one database and pricing engine for the till, layaways, special orders and chat sales, with the online store on the same catalog and stock; tills on a PC, tablet or phone; layaways, deposits and installments; held sales any till can resume, even offline; barcode and QR scanning; a customer display; EBT; returns with restock; receipts by print, PDF, link, email, SMS and WhatsApp. Partly: a fixed tender list, house charge only through an invoice, no ads on the display. Not yet: ID or age check, self-checkout, scan-and-go, nickel rounding, donation prompt. <a href="#lane">Item by item</a></td>
+          <td class="v"><span class="chip c">Catapult ahead, narrowly</span></td></tr>
+        <tr data-v="c"><th scope="row">Payments and US benefits</th>
+          <td class="c" data-label="Catapult">Direct links to major processors, EMV and contactless, offline card store-and-forward, EBT SNAP with chip-and-tap, eWIC, FSA/HSA (IIAS), four health-benefit card networks (820+ stores live), gift cards, house charge, fingerprint pay.</td>
+          <td class="o" data-label="OctaBiz">Stripe card readers (chip, tap and phone wallets). Any other card or EBT terminal can be recorded with its approval number. EBT Food and Cash with SNAP flags, the SNAP limit enforced by the database and SNAP tax removed. Refunds go back by tender. Gift cards with breakage accounting. No EBT on the reader, no WIC, no FSA/HSA. Offline, cards are run on a standalone machine and recorded.</td>
+          <td class="v"><span class="chip c">Catapult ahead</span></td></tr>
+        <tr data-v="c"><th scope="row">Prices and promotions</th>
+          <td class="c" data-label="Catapult">BOGO, mix and match, time-of-day deals, limit per sale, uses per period, stacking, store groups and zones, member prices, price-change worksheets, digital and manufacturer coupons, nutrition incentive programs, electronic shelf labels (Pricer, Aperion).</td>
+          <td class="o" data-label="OctaBiz">Has: buy X get Y, mix and match, N for a price, limit per sale, member prices from customer price lists, branch prices, dated department and vendor sales, saved discounts with caps and minimum spend, cashier discount limits, shelf label queue and designer, price check. Partly: usage caps and once per customer (no per-period limit), bulk repricing with undo (no future-dated batch), sales at chosen branches (no saved groups or zones), coupon codes online only. Not yet: time-of-day deals, stacking rules, manufacturer and digital coupons at the till, nutrition incentives, electronic shelf labels. <a href="#promo">Item by item</a></td>
+          <td class="v"><span class="chip c">Catapult ahead, narrowly</span></td></tr>
+        <tr data-v="e"><th scope="row">Items, buying and stock</th>
+          <td class="c" data-label="Catapult">Perpetual inventory, POs by EDI, fax or email, EDI with 100 suppliers (UNFI, KeHE), AI ordering with weather data, DSD, receiving, shrink, shelf life, a 1M-item product database, recipe costing, handheld terminal. No lot or expiry tracking found.</td>
+          <td class="o" data-label="OctaBiz">Variants, kg and lb, bundles, bills of materials and work orders costed at actual cost. POs with staged receiving, landed cost and receiving by phone scan. AI reads supplier bills; distributor price files load on a schedule. Reorder points, budgets and forecasts per branch feed draft POs in whole cases. Expiry batches sold oldest first, serial numbers, counts by scan, shrink by reason, vendor returns, transfers, consignment, goods on approval, Catapult import. EDI built, not yet live with a distributor. No outside product database.</td>
+          <td class="v"><span class="chip e">Even</span></td></tr>
+        <tr data-v="c"><th scope="row">Scales and fresh</th>
+          <td class="c" data-label="Catapult">Its own scale (AutoScale Max G3) runs the POS software. A weight at the lane opens the produce menu by itself. Camera produce recognition (November 2026). Deli shelf-life, ingredient and nutrition fields.</td>
+          <td class="o" data-label="OctaBiz">Not tied to a scale vendor: the till reads the price or weight labels any brand's scale prints (EAN-13 and UPC-A, prefix and layout set per branch, impossible weights caught). Sends branch prices to JHScale/Budry network scales and posts their weighings into the sale through Device Bridge (tested on a simulator so far). One PLU file that Hobart, Mettler Toledo, DIGI or Bizerba software imports. Weighed-item rounding per store. At the checkout lane the weight is typed in.</td>
+          <td class="v"><span class="chip c">Catapult ahead</span></td></tr>
+        <tr data-v="e"><th scope="row">Multi-store and HQ</th>
+          <td class="c" data-label="Catapult">HQ pushes prices, promotions and settings to stores; store groups and zones; warehouse picking. Proven at 107 stores and about 1,500 lanes.</td>
+          <td class="o" data-label="OctaBiz">Branches with their own stock, prices and tax address. One price change for every branch at once, or a department sale at chosen branches. Transfers with in-transit tracking, stock by location, reorder points and budgets per branch. Staff limited to chosen branches and apps, profit and loss by branch, a morning brief per store, consolidation across companies, no VPN. No store groups or pick lists. Not yet proven at chain scale.</td>
+          <td class="v"><span class="chip e">Even</span></td></tr>
+        <tr data-v="e"><th scope="row">Customers and loyalty</th>
+          <td class="c" data-label="Catapult">Points, automated trigger campaigns, email, SMS through a partner, phone-number sign-in at the lane, co-op membership with dues and member equity.</td>
+          <td class="o" data-label="OctaBiz">CRM with self-updating lists, rewards points found by phone at the till and usable online, unused points held as a liability in the books, Catapult balances carried over, automatic thank-yous and check-ins with lapsed customers, campaigns and sequences by email, SMS, WhatsApp and voice, an event-triggered automation builder, helpdesk. No tiers or birthday rewards, no co-op equity or dues.</td>
+          <td class="v"><span class="chip e">Even</span></td></tr>
+        <tr data-v="c"><th scope="row">Online selling</th>
+          <td class="c" data-label="Catapult">WebCart store hosted by ECRS, pickup, curbside and delivery, a picking tool, online SNAP, DoorDash Drive, ShipStation, AI product picks.</td>
+          <td class="o" data-label="OctaBiz">OctaShop store and site builder taking Stripe cards, cash on delivery or pay at pickup. Shoppers pick a store for pickup or get local delivery priced by ZIP or distance. Rewards points online, cart reminder and back-in-stock emails, an AI voice line and live chat, WhatsApp catalog orders, Shopify, WooCommerce and Square sync. No curbside, time slots, picking app, online SNAP, delivery partners or carrier labels.</td>
+          <td class="v"><span class="chip c">Catapult ahead</span></td></tr>
+        <tr data-v="e"><th scope="row">Reports and analytics</th>
+          <td class="c" data-label="Catapult">300+ reports and dashboards. The better analytics (Cognition, with plain-language questions) is a separate cloud product used by about 600 stores. Reviewers call the filters clunky.</td>
+          <td class="o" data-label="OctaBiz">About 42 ready-made reports plus a report builder: POS report by branch, till and cashier, sales by employee, department margin with shrink and labor share, busiest hours, item sales with cost and margin, sales tax by agency, P&amp;L and balance sheet. Excel, CSV and PDF export, drill to the record, scheduled email, a morning brief, Ask AI on every report, all in the plan. No margin by vendor, no weekly item movement report.</td>
+          <td class="v"><span class="chip e">Even</span></td></tr>
+        <tr data-v="o"><th scope="row">Accounting and back office</th>
+          <td class="c" data-label="Catapult">Sends a general-ledger export to another package. No payables or receivables found. Staff scheduling through a partner (TimeForge).</td>
+          <td class="o" data-label="OctaBiz">Full double-entry books: bills with approval rules, checks and ACH files, receivables with an AI collections agent, Plaid bank feeds and reconciliation, sales-tax nexus and filing periods by agency, 1099s with online W-9s, fixed assets, budgets, month-end close with a period lock, consolidation, multi-currency, move from QuickBooks or Xero. HR add-on with shifts and clock-in at the till. US payroll runs elsewhere: hours export to isolved, payroll journals import.</td>
+          <td class="v"><span class="chip o">OctaBiz ahead</span></td></tr>
+        <tr data-v="o"><th scope="row">AI</th>
+          <td class="c" data-label="Catapult">Camera produce recognition, bottom-of-basket detection, AI ordering, personal offers, shopper segments, chat over data, a docs assistant. It answers and suggests; we found nothing that takes actions.</td>
+          <td class="o" data-label="OctaBiz">An assistant that reads and changes data through 386 actions. It asks first by default, owners can let chosen routine actions run without asking, and every AI change is logged. Forecast ordering into draft POs, ring up a till sale by chat, workflow agents, meeting notetaker, bill and receipt reading, bank-line categorising, a collections agent, an MCP server. Phone receptionist in pilot. No camera AI at the lane, no shopper personalization.</td>
+          <td class="v"><span class="chip o">OctaBiz ahead</span></td></tr>
+        <tr data-v="c"><th scope="row">Hardware</th>
+          <td class="c" data-label="Catapult">Its own terminals, store and HQ servers, four self-checkout models, scales, handhelds, price checkers, fingerprint readers. Ricoh services the self-checkouts.</td>
+          <td class="o" data-label="OctaBiz">Runs on ordinary Windows PCs and Macs (offline desktop till) and in a phone browser. Common USB receipt printers (Epson, Star and generic), drawers, scanners (Symbol, Honeywell, Datalogic) and swipe readers, a customer display, Stripe readers and the ZKTeco all-in-one. Network label scales and US price labels, a phone as scanner and price checker. Native phone apps not yet in the stores. No lane scale, no self-checkout.</td>
+          <td class="v"><span class="chip c">Catapult ahead</span></td></tr>
+        <tr data-v="o"><th scope="row">API and integrations</th>
+          <td class="c" data-label="Catapult">Documented REST API, licensed per store. New endpoints are built only when a retailer pays for them.</td>
+          <td class="o" data-label="OctaBiz">Free self-serve REST API (about 200 operations, 73 permission scopes), signed webhooks for 140+ events, an MCP server for Claude and ChatGPT, EDI ordering for UNFI and KeHE, a developer console. About 20 ready connectors including QuickBooks, Shopify, Square, Stripe, Plaid, Google and Microsoft tools. Till sales fire no webhook yet; no published Zapier app.</td>
+          <td class="v"><span class="chip o">OctaBiz ahead</span></td></tr>
+        <tr data-v="e"><th scope="row">How it runs</th>
+          <td class="c" data-label="Catapult">Servers in each store plus a VPN. Lanes, built-in card payments and refunds keep working offline.</td>
+          <td class="o" data-label="OctaBiz">Cloud, no store server or VPN. The web app updates with every release and the Windows till updates itself. Tills open and sell offline, in the browser too, taking cash and cards run on a standalone terminal, with held orders and price and customer lookup. Built-in card readers, gift cards, points and refunds wait for the connection.</td>
+          <td class="v"><span class="chip e">Even</span></td></tr>
+        <tr data-v="o"><th scope="row">Price</th>
+          <td class="c" data-label="Catapult">Not published. "From US$25,000, per feature" on one directory (unverified). Training and support packages extra; servers and lanes bought or leased.</td>
+          <td class="o" data-label="OctaBiz">Public: Books free for one person, Core $38 a month (10 people, 5 locations, 20,000 products), Pro $104 a month (25 people, 20 locations, no product cap). Yearly saves 26% on Core and 15% on Pro. No setup or per-lane fee; calls, texts and extra AI billed at cost. More than 25 staff logins is an Enterprise quote.</td>
+          <td class="v"><span class="chip o">OctaBiz ahead</span></td></tr>
+        <tr data-v="c"><th scope="row">Track record and trust</th>
+          <td class="c" data-label="Catapult">Since 1989, 4,000+ locations, 98% retention (claimed), SOC 2 Type 2, PA-DSS, US support desk Monday to Friday 8am to 9pm ET plus emergencies around the clock, a yearly user conference.</td>
+          <td class="o" data-label="OctaBiz">Founded 2025. No US grocery reference yet; the first move off Catapult (Rainbow Blossom) is under way. PCI SAQ-A because card data stays with Stripe; no SOC 2. US phone support Monday to Friday 8am to 8pm ET, email within one business hour, a live status page.</td>
+          <td class="v"><span class="chip c">Catapult ahead</span></td></tr>
+      </tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No areas match this filter. Choose "All 16" to see every area.</p>
+  </div>
+
+  <div class="sec-head" id="lane" style="padding-top:16px">
+    <h3>Checkout lane, item by item</h3>
+    <p class="muted measure">Every checkout feature Catapult lists, checked in OctaBiz's code and in the live app on 19 November 2026.</p>
+  </div>
+  <div class="table-box">
+    <table class="items">
+      <thead><tr><th scope="col">Catapult feature</th><th scope="col">OctaBiz</th><th scope="col">What exists today</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">One engine for every lane and channel</th><td><span class="chip o">Has</span></td><td>One database and one pricing engine for the till, layaways, special orders and sales rung up by chat. The online store shares the catalog, stock, coupon codes, rewards and gift cards; it does not yet apply the till's automatic deals, member prices or branch prices.</td></tr>
+        <tr><th scope="row">Line-busting on a tablet</th><td><span class="chip o">Has</span></td><td>The web till runs on a tablet or phone, with a phone paired as a scanner and Stripe readers on the network. Native store apps are not released yet.</td></tr>
+        <tr><th scope="row">Layaway</th><td><span class="chip o">Has</span></td><td>Deposits, stock held for the customer, deposits booked as a liability; pickup becomes the sale.</td></tr>
+        <tr><th scope="row">Prepayment and installments</th><td><span class="chip o">Has</span></td><td>Special orders take a deposit. An invoice can be split into a planned installment set, and the till can take a payment on an open invoice.</td></tr>
+        <tr><th scope="row">Suspend and resume a sale</th><td><span class="chip o">Has</span></td><td>Held baskets are saved on the server, and any till in the branch can resume one, even offline.</td></tr>
+        <tr><th scope="row">Barcode and QR scanning</th><td><span class="chip o">Has</span></td><td>USB and keyboard scanners, the device camera, or a phone paired by QR code.</td></tr>
+        <tr><th scope="row">Unlimited payment methods</th><td><span class="chip e">Partly</span></td><td>Stripe card readers at the till, and any other card or EBT terminal recorded with its approval number. Stripe, PayPal, Square and Plaid bank payments on invoices, bookings and the online store. Square readers at the till are built but paused. The till's tender list is fixed at cash, card, split, gift card and EBT; owners cannot add their own, such as check or store account.</td></tr>
+        <tr><th scope="row">House charge</th><td><span class="chip e">Partly</span></td><td>The till can hand the cart to an invoice on payment terms. There is no one-tap "charge to account" tender, and the "pay later" option on the split screen is refused when the sale completes.</td></tr>
+        <tr><th scope="row">Customer display with ads</th><td><span class="chip e">Partly</span></td><td>Cart, totals, customer name, points, a welcome line and change due. No images, ads or promotions.</td></tr>
+        <tr><th scope="row">ID scan for age</th><td><span class="chip c">Not yet</span></td><td>The parts exist: OCR reads receipts, bills, contracts and business cards, and a customer record can keep a photo of a passport, national ID or driver's license. Missing is the till rule: an age flag on products and a prompt or license scan that stops the sale.</td></tr>
+        <tr><th scope="row">Self-checkout lane</th><td><span class="chip c">Not yet</span></td><td>Restaurants already let guests order and pay from a table QR code. There is no retail self-checkout.</td></tr>
+        <tr><th scope="row">Scan-and-go on the shopper's phone</th><td><span class="chip c">Not yet</span></td><td>Staff phones scan; shoppers cannot scan and pay in the aisle.</td></tr>
+        <tr><th scope="row">Nickel rounding and donation round-up</th><td><span class="chip c">Not yet</span></td><td>A cash rounding setting is read in code, but it has no screen and is not applied to cash sales. No donation prompt.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted measure">Of these 13 lines, OctaBiz has 6, has 3 in part and lacks 4.</p>
+
+  <div class="sec-head" id="promo" style="padding-top:16px">
+    <h3>Prices and promotions, item by item</h3>
+    <p class="muted measure">Every pricing feature Catapult lists, checked in OctaBiz's code (main branch, 19 November 2026) and in the live promotion editor.</p>
+  </div>
+  <div class="table-box">
+    <table class="items">
+      <thead><tr><th scope="col">Catapult feature</th><th scope="col">OctaBiz</th><th scope="col">What exists today</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Buy one get one</th><td><span class="chip o">Has</span></td><td>Buy X get Y; the reward can be free, half price or a set percent off, and can be a different item.</td></tr>
+        <tr><th scope="row">Mix and match</th><td><span class="chip o">Has</span></td><td>Bundle price for one item or a mix of items, and N for a price.</td></tr>
+        <tr><th scope="row">Limit per sale</th><td><span class="chip o">Has</span></td><td>"Limit per sale" on every promotion.</td></tr>
+        <tr><th scope="row">Member prices</th><td><span class="chip o">Has</span></td><td>Customer price lists with quantity tiers and dates, applied at the till.</td></tr>
+        <tr><th scope="row">Uses per period</th><td><span class="chip e">Partly</span></td><td>Saved discounts have a total usage cap and "once per customer". No limit per day, week or month.</td></tr>
+        <tr><th scope="row">Price-change worksheets</th><td><span class="chip e">Partly</span></td><td>Bulk repricing with preview and undo, and a history of every price change by branch. A batch cannot be scheduled for a future date.</td></tr>
+        <tr><th scope="row">Store groups and zones</th><td><span class="chip e">Partly</span></td><td>A department sale can run at chosen branches, and a new price can go to every branch at once. No saved store groups or price zones.</td></tr>
+        <tr><th scope="row">Digital and manufacturer coupons</th><td><span class="chip e">Partly</span></td><td>Coupon codes work at online checkout, and free promotional gift cards act as store coupons. At the till a cashier picks a saved discount; no code entry, no scanned manufacturer coupons, no digital coupons tied to the customer.</td></tr>
+        <tr><th scope="row">Time-of-day deals</th><td><span class="chip c">Not yet</span></td><td>Promotions run by date only. No hour or weekday fields anywhere in the code.</td></tr>
+        <tr><th scope="row">Stacking rules</th><td><span class="chip c">Not yet</span></td><td>One fixed rule: one deal per unit, the larger saving wins. Owners cannot set which promotions combine.</td></tr>
+        <tr><th scope="row">Nutrition incentive programs</th><td><span class="chip c">Not yet</span></td><td>No earn-and-burn produce incentives such as Double Up Food Bucks.</td></tr>
+        <tr><th scope="row">Electronic shelf labels</th><td><span class="chip c">Not yet</span></td><td>No link to Pricer, Aperion or any other ESL system. Paper shelf labels are covered: a print queue per branch and a tag designer.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted measure">Of these 12 lines, OctaBiz has 4, has 4 in part and lacks 4.</p>
+</section>
+
+<section id="gaps" class="wrap sec">
+  <div class="sec-head">
+    <h2>What Catapult has that we don't</h2>
+    <p class="muted measure">Grouped by how much each gap blocks a sale to a US grocer.</p>
+  </div>
+
+  <div class="tier-head">
+    <h3>Needed before we can sell to most US grocers</h3>
+    <p class="muted">A store that takes SNAP or sells alcohol will ask about these in the first demo.</p>
+  </div>
+  <ol class="must">
+    <li><h3>EBT on the card reader</h3>
+      <p>Today a cashier keys the amount into a separate EBT machine and records it in OctaBiz. Catapult reads the EBT card at its own pin pad, including the new chip cards.</p>
+      <p class="move"><b>Move:</b> add SNAP and EBT Cash through a card processor certified for EBT, at the till first and online later.</p></li>
+    <li><h3>Card payments without internet</h3>
+      <p>Catapult stores the card payment and sends it when the line is back. OctaBiz's built-in readers need a connection; offline, the cashier runs the card on a standalone terminal and records it by hand, which means double entry and no automatic match.</p>
+      <p class="move"><b>Move:</b> store-and-forward through the card processor, with a per-sale limit the owner sets.</p></li>
+    <li><h3>ID check for age-restricted items</h3>
+      <p>Catapult scans the barcode on a driver's license and checks the format. OctaBiz already has OCR and keeps ID photos on customer records, but the till has no age flag on products and nothing that stops an underage sale.</p>
+      <p class="move"><b>Move:</b> read the license barcode with the till scanner, block the sale under 21 for products marked alcohol or tobacco, and log who approved it.</p></li>
+    <li><h3>A live scale at the lane</h3>
+      <p>Catapult reads the weight from the checkout scale and opens the produce menu by itself. OctaBiz asks the cashier to type the weight.</p>
+      <p class="move"><b>Move:</b> add serial and USB checkout scanner-scales (for example Datalogic Magellan) to Device Bridge.</p></li>
+    <li><h3>WIC</h3>
+      <p>Catapult appears on state eWIC lists. Each state certifies a POS on its own, which takes months.</p>
+      <p class="move"><b>Move:</b> start certification early in the state of the first target stores, or work through a WIC-certified processor.</p></li>
+  </ol>
+
+  <div class="tier-head" id="build">
+    <h3>Full build list</h3>
+    <p class="muted measure">Everything OctaBiz does not have yet, from every row of the scorecard, ready to add to the project. "Now" items block a sale to a US grocer; "Next" items win fuller-service stores; "Later" items are polish.</p>
+  </div>
+  <div class="table-box">
+    <table class="build">
+      <thead><tr><th scope="col">#</th><th scope="col">What to build</th><th scope="col">Area</th><th scope="col">When</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>EBT SNAP and EBT Cash on the card reader, through a processor certified for EBT</td><td>Payments</td><td><span class="chip c">Now</span></td></tr>
+        <tr><td class="num">2</td><td>Store-and-forward for built-in card readers when the internet drops, with an owner-set limit</td><td>Payments</td><td><span class="chip c">Now</span></td></tr>
+        <tr><td class="num">3</td><td>Age-restricted products: an age flag, a prompt at the till, a driver's license scan, and a log of who approved</td><td>Checkout</td><td><span class="chip c">Now</span></td></tr>
+        <tr><td class="num">4</td><td>Live weight from serial and USB checkout scanner-scales in Device Bridge; a bench test on a real Budry scale</td><td>Scales</td><td><span class="chip c">Now</span></td></tr>
+        <tr><td class="num">5</td><td>WIC certification in the state of the first target stores</td><td>Payments</td><td><span class="chip c">Now</span></td></tr>
+        <tr><td class="num">6</td><td>Owner-defined tenders (check, store account and others) and a house charge tender; fix the "pay later" split that is refused</td><td>Checkout</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">7</td><td>Nickel rounding for cash sales and a donation round-up prompt</td><td>Checkout</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">8</td><td>Time-of-day and day-of-week promotions</td><td>Promotions</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">9</td><td>Stacking rules the owner sets, and uses per day, week or month per customer</td><td>Promotions</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">10</td><td>Coupons at the till: code entry, scanned manufacturer coupons (GS1 DataBar) and digital coupons tied to the customer</td><td>Promotions</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">11</td><td>Saved store groups and price zones; price changes scheduled for a future date</td><td>Promotions</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">12</td><td>Online store applies the till's automatic deals, member prices and branch prices</td><td>Online</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">13</td><td>Online grocery: curbside, time slots, a picking app, online SNAP, DoorDash or Instacart delivery, carrier labels</td><td>Online</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">14</td><td>FSA/HSA (IIAS) and health-benefit OTC cards</td><td>Payments</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">15</td><td>Retail self-checkout lane and scan-and-go on the shopper's phone</td><td>Checkout</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">16</td><td>Electronic shelf labels (Pricer, Aperion or similar)</td><td>Promotions</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">17</td><td>EDI live with a first distributor (UNFI or KeHE)</td><td>Buying</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">18</td><td>Co-op membership: dues, member equity and patronage</td><td>Loyalty</td><td><span class="chip e">Next</span></td></tr>
+        <tr><td class="num">19</td><td>Nutrition incentive programs such as Double Up Food Bucks</td><td>Promotions</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">20</td><td>Loyalty tiers, birthday rewards and bonus points</td><td>Loyalty</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">21</td><td>Ads and promotions on the customer display; quick keys at the till</td><td>Checkout</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">22</td><td>Branch prices in the scale PLU file, tare sent to Budry, deli labels with ingredients and nutrition</td><td>Scales</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">23</td><td>Margin by vendor and a weekly item movement report</td><td>Reports</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">24</td><td>Native iOS and Android apps released in the stores</td><td>Hardware</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">25</td><td>A webhook for till sales and a published Zapier app</td><td>API</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">26</td><td>A handheld app for receiving, price checks and label printing</td><td>Buying</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">27</td><td>A security pack for US buyers: a SOC 2 plan, one consistent pen-test statement, uptime history</td><td>Trust</td><td><span class="chip o">Later</span></td></tr>
+        <tr><td class="num">28</td><td>Camera produce recognition at the scale</td><td>Scales</td><td><span class="chip o">Later</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tier-head">
+    <h3>What Catapult offers on the "Next" items</h3>
+  </div>
+  <div class="table-box">
+    <table>
+      <thead><tr><th scope="col">Gap</th><th scope="col">What Catapult offers</th><th scope="col">Who asks for it</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Self-checkout</th><td>Four models with weight security, cameras and staff alerts.</td><td>Stores with 4+ lanes and staffing pressure</td></tr>
+        <tr><th scope="row">Custom tenders and house charge</th><td>Owners add their own tenders; customers buy on a store account and pay monthly, with payroll deduction for staff.</td><td>Small-town grocers and co-ops</td></tr>
+        <tr><th scope="row">Nickel rounding and donation round-up</th><td>Cash change rounded to $0.05; a round-up prompt on the pin pad.</td><td>Stores that take cash; ECRS added it in November 2025 as pennies run short</td></tr>
+        <tr><th scope="row">FSA/HSA and health-benefit cards</th><td>IIAS plus four OTC card networks, live in 820+ stores.</td><td>Stores near clinics and with older shoppers</td></tr>
+        <tr><th scope="row">Coupons and time-of-day deals</th><td>Scanned manufacturer coupons, digital coupons tied to the customer, timed prices, nutrition incentives such as Double Up Food Bucks.</td><td>Conventional supermarkets</td></tr>
+        <tr><th scope="row">Electronic shelf labels</th><td>Pricer and Aperion links, so shelf prices change with the system.</td><td>Stores with frequent price changes</td></tr>
+        <tr><th scope="row">Online SNAP and delivery partners</th><td>SNAP at online checkout, DoorDash Drive for delivery.</td><td>Stores selling online in low-income areas</td></tr>
+        <tr><th scope="row">EDI in production</th><td>100 suppliers live, 2,000+ UNFI accounts through its gateway.</td><td>Natural grocers buying from UNFI and KeHE</td></tr>
+        <tr><th scope="row">Co-op membership</th><td>Dues, member equity and patronage at the till.</td><td>Food co-ops, one of Catapult's named segments</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+<section id="advantages" class="wrap sec">
+  <div class="sec-head">
+    <h2>Where OctaBiz is ahead</h2>
+    <p class="muted measure">Each point was checked in production with the test account or in the code on 18 November 2026.</p>
+  </div>
+
+  <div class="lead-adv">
+    <div class="copy">
+      <h3>AI that does the work, not only reports on it</h3>
+      <p class="muted">The assistant can read and change records through 386 actions across books, stock, POS, CRM and bookings. By default it shows an approval card before any change; owners can let chosen routine actions, such as categorising bank lines, run without asking. Every AI change is logged with who asked, which model acted and why. The same actions are open to outside AI tools through the MCP server and the REST API. It can even ring up a till sale and send the receipt by WhatsApp or SMS.</p>
+      <ul>
+        <li>Catapult's AI sits in Cognition, a separate cloud product that about 600 of its 4,000+ stores use.</li>
+        <li>It forecasts orders and answers questions. We found nothing in ECRS's material where its AI changes data for the user.</li>
+      </ul>
+    </div>
+    <div class="transcript" aria-label="Live test of the OctaBiz assistant, 18 November 2026">
+      <span class="who">Question asked in the test account</span>
+      <p class="bubble q">Which products are below their low-stock level at this store, and what would a purchase order to restock them look like? Do not create anything, just show me.</p>
+      <span class="who">OctaBiz assistant <span class="steps">· 3 steps · 21 seconds · live stock data</span></span>
+      <div class="bubble a">
+        <p>Three products are below their stock level, all out of stock with nothing on order. It showed them in a table with CSV export, then listed what it still needed before drafting a PO:</p>
+        <ul>
+          <li>quantities, because no reorder point is set</li>
+          <li>prices, because no cost is recorded</li>
+          <li>a supplier name</li>
+        </ul>
+        <p class="muted" style="margin-top:6px">It created nothing, as asked, and offered to prepare a draft for review.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="adv-list">
+    <article><h3>The books are built in</h3><p>Every sale, refund, gift card and reward point posts to a double-entry ledger. The rewards page shows points owed to customers as a liability in the books. Catapult sends a ledger export to another package and has no payables or receivables.</p></article>
+    <article><h3>Nothing to install in the store</h3><p>No store server, no VPN, no back-room box to patch. Updates go live as they merge: 358 pull requests reached production between 3 and 18 November 2026. Catapult reviewers complain that updates bring bugs that take "weeks or months" to fix.</p></article>
+    <article><h3>One system for the whole business</h3><p>51 apps: CRM, email, SMS and WhatsApp marketing, helpdesk, phone, HR and shifts, projects, online store, bookings, restaurant and hotel. Catapult covers the store; for books, CRM, helpdesk or HR its retailers need other software.</p></article>
+    <article><h3>Stock control Catapult lacks</h3><p>Batches with expiry dates sold oldest first, serial numbers, landed cost on receiving, bills of materials and work orders, consignment stock, goods on approval, and supplier bills read by AI. We found no lot or expiry tracking in Catapult.</p></article>
+    <article><h3>Open by default</h3><p>Public REST API, signed webhooks and an MCP server. Catapult licenses its API per store and builds new endpoints only when a retailer pays for them.</p></article>
+    <article><h3>A price a store owner can see</h3><p>$38 or $104 a month, on the website and in the app. Catapult quotes per deal; one directory lists it from $25,000.</p></article>
+    <article><h3>A way out of Catapult already exists</h3><p>The "Move from Catapult" importer brings departments, vendors, items with store prices and scale and SNAP fields, customers, past sales and rewards balances. It has not yet run on a real Catapult export.</p></article>
+    <article><h3>Receipts where customers read them</h3><p>Print, PDF, link, email, SMS and WhatsApp. We found email receipts in Catapult but no SMS receipts.</p></article>
+  </div>
+
+  <figure class="shot">
+    <img src="img/octabiz-apps.jpg" width="1142" height="782" alt="Ocean Market in the OctaBiz test account, showing All apps with a count of 51 and app cards for Marketing, POS, Resources, Calendar, OctaShop, Phone and messages, Rug cleaning and Project Management with monthly prices" loading="lazy">
+    <figcaption>Ocean Market in the test account, 18 November 2026: 51 apps.</figcaption>
+  </figure>
+</section>
+
+<section id="ai" class="wrap sec">
+  <div class="sec-head">
+    <h2>AI, side by side</h2>
+    <p class="muted measure">The two companies are building different kinds of AI. Catapult puts it at the lane and in analytics. OctaBiz puts it in the back office, where it acts.</p>
+  </div>
+  <div class="table-box">
+    <table class="ai">
+      <thead><tr><th scope="col"></th><th scope="col">Catapult</th><th scope="col">OctaBiz</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Where it lives</th><td>Cognition, a separate cloud product. About 15% of stores had it in May 2025.</td><td>In every plan: 1,000 AI steps a month on Core, 5,000 on Pro.</td></tr>
+        <tr><th scope="row">What it does</th><td>Forecasts orders with weather data, segments shoppers, personal offers, answers questions over store data, answers questions about the manuals.</td><td>Answers from live data, drafts, changes records after approval, forecasts orders into draft POs, runs workflows, takes meeting notes, reads bills and receipts, chases unpaid invoices. Phone receptionist in pilot.</td></tr>
+        <tr><th scope="row">Takes actions</th><td>No evidence found.</td><td>Yes. Asks first by default, owners can allow chosen routine actions, and every AI change is logged.</td></tr>
+        <tr><th scope="row">At the checkout</th><td>Camera produce recognition and bottom-of-basket detection.</td><td>Nothing at the lane. Chat can ring up a sale.</td></tr>
+        <tr><th scope="row">Models</th><td>Not named.</td><td>Claude (Haiku 5.5 by default, Sonnet 5.5 for harder turns), Gemini and others through one gateway.</td></tr>
+        <tr><th scope="row">Outside AI tools</th><td>No.</td><td>MCP server for Claude, ChatGPT and other clients.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="price" class="wrap sec">
+  <div class="sec-head">
+    <h2>What it costs</h2>
+    <p class="muted measure">OctaBiz prices are from the live plan picker. Catapult publishes none, so the right column lists only what sources state.</p>
+  </div>
+  <div class="price">
+    <figure class="shot">
+      <img src="img/octabiz-plans.jpg" width="1024" height="711" alt="OctaBiz plan picker: Core at 38 dollars a month with 10 users, 50 GB storage, 20,000 products, 5 locations and 1,000 AI steps; Pro at 104 dollars a month with 25 users, 200 GB, unlimited products, 20 locations and 5,000 AI steps; yearly billing saves 20 percent" loading="lazy">
+      <figcaption>OctaBiz plan picker, 18 November 2026. A store with more than 20,000 items needs Pro. The "Save 20%" label is out of date: yearly billing saves 26% on Core and 15% on Pro.</figcaption>
+    </figure>
+    <div>
+      <h3 style="margin-bottom:8px">Catapult, what is known</h3>
+      <dl class="cost-list">
+        <div><dt>Software</dt><dd>From $25,000, per feature (directory listing, unverified)</dd></div>
+        <div><dt>Training</dt><dd>$250 per person, 3-day course</dd></div>
+        <div><dt>Online training</dt><dd>Needs an active support package</dd></div>
+        <div><dt>Fingerprint pay</dt><dd>About $250 per lane</dd></div>
+        <div><dt>Servers and lanes</dt><dd>Bought or leased</dd></div>
+        <div><dt>Managed IT</dt><dd>Sold by the dealer</dd></div>
+      </dl>
+      <p class="muted" style="margin-top:14px">Card processing is not tied to ECRS: the retailer picks from the processors Catapult supports.</p>
+    </div>
+  </div>
+</section>
+
+<section id="weak" class="wrap sec">
+  <div class="sec-head">
+    <h2>Catapult's weak spots</h2>
+    <p class="muted measure">Ranked by how much each one costs a store. Quotes come from public reviews, most of them from 2022; there are fewer than 50 public reviews in total.</p>
+  </div>
+  <ol class="weak">
+    <li><h3>Servers in every store</h3><p>A store server, Windows terminals and a VPN for the back office. No move to cloud POS has been announced.</p><span class="src">ECRS hardware and back-office pages, JCR and DBS dealer pages</span></li>
+    <li><h3>No public price, modules sold one by one</h3><p>Training is extra, and online training needs a support package.</p><span class="src">Capterra listing, ECRS training page</span></li>
+    <li><h3>Updates that bring bugs</h3><q>updates often add bugs, and some take weeks or months to resolve</q><span class="src">SoftwareFinder review, 2022</span></li>
+    <li><h3>Hard to set up</h3><q>configuring features requires real expertise</q><span class="src">SoftwareFinder review, 2022</span></li>
+    <li><h3>Dated look, slow new features</h3><q>new feature development is too slow</q><span class="src">SoftwareFinder review, 2022; Capterra mentions "antiquated design"</span></li>
+    <li><h3>Awkward reports</h3><q>reporting gets odd with many filters</q><span class="src">SoftwareFinder review; no drill-down on cashier reports</span></li>
+    <li><h3>Side modules lag</h3><p>Loyalty, email and online store trail specialist tools, according to a supermarket manager.</p><span class="src">Capterra review, 2021</span></li>
+    <li><h3>Support hours and quality</h3><p>Staffed Monday to Friday, 8am to 9pm ET, emergencies only otherwise. Reviewers call support "underwhelming".</p><span class="src">ECRS support page, SoftwareFinder</span></li>
+  </ol>
+</section>
+
+<section id="next" class="wrap sec">
+  <div class="sec-head">
+    <h2>What to do next</h2>
+    <p class="muted measure">Our recommendation. Product and pricing decisions stay with the owner.</p>
+  </div>
+  <div class="plays">
+    <div class="play primary"><h3>Win stores at their next hardware refresh</h3><p>Target independent and natural grocers with 1 to 20 stores when their store server or lanes are due for replacement. Pitch: no servers, books included, AI that does back-office work, a price on the website. This needs the five lane gaps closed.</p></div>
+    <div class="play"><h3>Make Rainbow Blossom the reference</h3><p>Finish the move off Catapult, then publish a case study with real numbers once they exist, such as time to close the month or hours spent ordering.</p></div>
+    <div class="play"><h3>Skip Catapult's expensive ground for now</h3><p>Self-checkout, fuel, pharmacy and camera AI cost a lot to build and mostly serve bigger stores. Leave them until the core lane gaps are closed.</p></div>
+  </div>
+  <h3>Suggested build order</h3>
+  <ol class="order measure">
+    <li>EBT on the card reader. <span>SNAP chip-and-tap through a certified processor.</span></li>
+    <li>Card payments without internet. <span>Store-and-forward with an owner-set limit.</span></li>
+    <li>Age check by license scan. <span>Flag products, block under 21, log the approval.</span></li>
+    <li>Live checkout scale in Device Bridge. <span>Weight straight into the sale.</span></li>
+    <li>Time-of-day deals and coupons scanned at the till.</li>
+    <li>WIC certification in the first target state.</li>
+    <li>A security pack for US buyers.</li>
+  </ol>
+  <p class="muted measure">After that: nickel rounding, house charge, online SNAP with curbside and a picking app, FSA/HSA, electronic shelf labels and co-op membership.</p>
+</section>
+
+<section id="method" class="wrap sec">
+  <div class="sec-head">
+    <h2>How this was checked</h2>
+  </div>
+  <div class="method">
+    <ul>
+      <li><strong>Catapult:</strong> ECRS's website, press releases and API documentation (dated 16 November 2026), JCR Systems pages, state WIC lists and review sites. Most Catapult numbers come from ECRS itself and are not audited. Some review sites blocked direct reading, so their figures come from search results.</li>
+      <li><strong>OctaBiz, live:</strong> production at octabiz.ai with the test account on 18 November 2026: Ocean Market, plan picker, the AI assistant, and POS pages for EBT, rewards, PLU catalog, promotions, terminals and the morning brief.</li>
+      <li><strong>OctaBiz, code:</strong> the main branch on 18 November 2026. Items marked "built, not yet run" exist in code but have not been used with a real partner.</li>
+      <li><strong>Second check, 19 November 2026:</strong> at the owner's request every OctaBiz cell was checked again, row by row, against the newest main branch and the live test account. Cells were rewritten to list what was missing; the Reports row moved from "OctaBiz ahead" to "Even".</li>
+      <li><strong>Third check, 19 November 2026:</strong> the owner's lists for the checkout lane and for prices and promotions were checked feature by feature. The results are in the two item-by-item tables, and everything still missing is in the full build list.</li>
+    </ul>
+    <ul class="sources">
+      <li><a href="https://www.jcrsystems.com/catapult/">JCR Systems, Catapult page</a></li>
+      <li><a href="https://www.ecrs.com/company/history/">ECRS, company history</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/ecrs-launches-ecosystem-edi-fast-track-to-accelerate-supplier-integration/">ECRS, 4,000+ locations (Jan 2026)</a></li>
+      <li><a href="https://www.ecrs.com/retail-pos/hardware/digital-store-controller/">ECRS, Store Controller</a></li>
+      <li><a href="https://ecrs.com/retail-pos/back-office-management/">ECRS, back office over VPN</a></li>
+      <li><a href="https://www.ecrs.com/retail-pos/payment-processing/">ECRS, payment processing</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/ecrs-advances-retail-pos-payment-security-announces-new-ebt-chip-and-tap-technology/">ECRS, EBT chip-and-tap</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/more-than-820-catapult-retail-locations-now-live-with-health-benefit-card-acceptance/">ECRS, 820+ stores on health-benefit cards</a></li>
+      <li><a href="https://www.ecrs.com/retail-pos/hardware/autoscale/">ECRS, AutoScale Max</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/ecrs-vision-match-brings-ai-powered-produce-recognition-to-grocery-checkout/">ECRS, Vision Match</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/ecrs-achieves-new-milestone-with-catapult-cognition-over-600-stores-now-live-with-advanced-business-intelligence-and-ai/">ECRS, Cognition at 600+ stores</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/ecrs-announces-chat-with-cognition-ai-powered-data-insight-for-independent-retailers/">ECRS, Chat with Cognition</a></li>
+      <li><a href="https://www.ecrs.com/catapult-api/">ECRS, CATAPULT API</a></li>
+      <li><a href="https://theshelbyreport.com/2026/03/18/ecrs-standardizes-third-party-access-to-catapult-platform/">The Shelby Report, API policy</a></li>
+      <li><a href="https://www.ecrs.com/retail-pos/onboarding-and-support/">ECRS, onboarding and support hours</a></li>
+      <li><a href="https://www.ecrs.com/resources/training/catapult-fundamentals/">ECRS, Fundamentals training price</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/cub-completes-impressive-rollout-of-ecrs-catapult-system-to-107-stores/">ECRS, Cub rollout</a></li>
+      <li><a href="https://www.ecrs.com/resources/library/p/ecrs-prioritizes-long-term-retail-partnerships-proven-by-a-98-customer-retention-rate/">ECRS, 98% retention claim</a></li>
+      <li><a href="https://softwarefinder.com/retail/catapult/reviews">SoftwareFinder reviews</a></li>
+      <li><a href="https://www.capterra.com/p/8363/Catapult/reviews/">Capterra reviews</a></li>
+      <li><a href="https://dbs4pos.com/catapult-pos/get-catapult-pos/">DBS dealer, Windows-based</a></li>
+      <li><a href="https://www.oregon.gov/oha/PH/HEALTHYPEOPLEFAMILIES/WIC/Documents/eWIC-Certified-Systems-November-2025.pdf">Oregon eWIC certified systems</a></li>
+    </ul>
+  </div>
+  <div class="note measure" id="found">
+    <h3 style="margin-bottom:8px; color: var(--ink)">Problems found while checking</h3>
+    <ul class="smaller" style="color: var(--ink-2)">
+      <li>The split payment screen offers "pay later", but the till refuses any unpaid remainder when the sale completes (useCompleteSale.ts, around line 693).</li>
+      <li>The in-app plan picker says "Save 20%" for yearly billing; the real saving is 26% on Core and 15% on Pro.</li>
+      <li>POS, Override analytics shows an error in the test account: "invalid input syntax for type json".</li>
+      <li>The public security page claims quarterly outside penetration tests and 24/7 on-call; the internal policy says yearly, and no test report is in the repo. Align them before a US buyer asks.</li>
+      <li>The label scale PLU file uses the default price, not each branch's price, and tare is not sent to Budry scales.</li>
+      <li>Recent "Apply migrations (auto)" runs fail after about 4 seconds, the pattern of a GitHub Actions billing block. Production still has every migration recorded.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <p>Prepared 18 November 2026 for the OctaBiz team. Catapult facts are as published by ECRS and its dealers on that date.</p>
+</footer>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.filters button');
+  var rows = document.querySelectorAll('.score tbody tr');
+  var count = document.getElementById('count');
+  var empty = document.getElementById('empty');
+  function apply(f) {
+    var shown = 0;
+    rows.forEach(function (r) {
+      var on = f === 'all' || r.getAttribute('data-v') === f;
+      r.hidden = !on;
+      if (on) shown++;
+    });
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-f') === f ? 'true' : 'false'); });
+    count.textContent = 'Showing ' + shown + ' of ' + rows.length + ' areas';
+    empty.hidden = shown !== 0;
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-f')); });
+  });
+})();
+</script>
+
+</html>
